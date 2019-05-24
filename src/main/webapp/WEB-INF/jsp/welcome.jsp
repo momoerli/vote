@@ -13,6 +13,8 @@ Spring URL: ${springUrl} at ${time}
 JSTL URL: ${url}
 <br>
 Message: ${message}
+
+<img src="/static/logo.gif">
 </body>
 
 </html>

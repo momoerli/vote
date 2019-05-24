@@ -3,7 +3,7 @@ spring:
   application:
     message: Hello Phil
   datasource:
-    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/vote?useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -11,3 +11,11 @@ spring:
     view:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
+debug: true
+server:
+  servlet:
+    context-path: /v
+  port: 80
+  tomcat:
+    uri-encoding: utf-8
+
