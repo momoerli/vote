@@ -59,7 +59,7 @@ a:hover {
 		<div style="margin-top: 70px; display: none" id="addinfo_div">
 			<center>
 				<p style="font-size: 20px;">添加新投票</p>
-				<form action="VoteServlet?flag=addinfo" method="post"
+				<form action="${ctx}/vote/addInfo" method="post"
 					onsubmit="return checkAdd();">
 					<!-- 这里用一个隐藏的表单来存储增加的选项数量 -->
 					<input name="rowCount" type="hidden" value="2" id="rowc" />

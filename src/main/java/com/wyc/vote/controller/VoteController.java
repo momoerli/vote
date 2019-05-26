@@ -50,6 +50,38 @@ public class VoteController {
         return "admin";
     }
 
+    /**
+     * add new vote.
+     * @return
+     */
+    @RequestMapping("addInfo")
+    public String addInfo(HttpServletRequest req, HttpServletResponse resp, Model model){
+        //User user= (User) req.getSession().getAttribute("user");
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String[] s = null;
+        //获取投票主题和投票内容
+        String vote_title = req.getParameter("vote_title");//投票主题
+        String vote_type = req.getParameter("vote_type");//投票类型 单选0，多选1
+        String rowCount = req.getParameter("rowCount");//选项数量
+        int rowC = Integer.parseInt(rowCount);
+        s = new String[rowC];
+        for (int i = 0; i < rowC; i++) {
+            s[i] = req.getParameter("option"+(i+1));//选项内容
+        }
+        //infodao = new InfoDao();
+        //vote_title作为参数给到addinfo();
+        int c_id =infoService.addinfo(vote_title, vote_type);//返回的是choose_id
+        boolean b = infoService.addmessage(c_id, rowC, s);
+        int vote_id = infoService.searchVote_id(c_id);//返回vote_id 用于记录发起投票的人
+        int user_id = user.getUserId();//获得user_id 用于记录发起投票的人
+        b = infoService.addUser_add_vote(vote_id,user_id);
+//        if(b) {
+//            resp.getWriter().println("<script>alert('添加成功');window.location.href='admin.jsp'</script>");
+//
+//        }
+        return "redirect:/";
+    }
+
     @RequestMapping("showVote")
     public String showVote(HttpServletRequest req, HttpServletResponse resp, Model model) throws Exception{
         //infodao = new InfoDao();

@@ -8,12 +8,128 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Service
 public class InfoService {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    //用于记录发起投票的人  查询vote_info表中的vote_id
+    public int searchVote_id(int c_id) {
+        String sql = "select * from vote_info where choose_id='"+c_id+"'";
+
+        Map<String, Object> map = jdbcTemplate.queryForMap(sql);
+        int i = Integer.valueOf(map.get("vote_id")+"");
+
+//        Connection conn=JDBCUtil.getConnection();
+//        int i=0;
+//        try {
+//            stmt = conn.prepareStatement(sql);
+//            rs = stmt.executeQuery(sql);
+//            if (rs.next()) {
+//                i = rs.getInt("vote_id");
+//            }
+//
+//
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//        }finally {
+//            //关闭数据库
+//            JDBCUtil.close(conn, stmt, null, rs);
+//        }
+        return i;
+    }
+    //标记投票内容与投票人的联系  添加vote_id和user_id到user_add_vote表
+    public boolean addUser_add_vote(int vote_id,int user_id ) {
+        String sql="insert into user_add_vote(user_id,vote_id) VALUES (?,?) ";
+
+        int i = jdbcTemplate.update(sql, vote_id, user_id);
+
+//        Connection conn=JDBCUtil.getConnection();
+//        int i = 0;
+//        try {
+//            //编译sql语句
+//            psmt = conn.prepareStatement(sql);
+//            psmt.setInt(1, vote_id);
+//            psmt.setInt(2, user_id);
+//            i = psmt.executeUpdate();
+//
+//        } catch (SQLException e) {
+//
+//            e.printStackTrace();
+//        }finally {
+//            //关闭数据库
+//            JDBCUtil.close(conn, stmt, psmt, rs);
+//        }
+        return i>0;
+    }
+
+
+
+    //投票信息新增 加入vote_choose表
+    public boolean addmessage(int c_id,int rowC,String[] s) {
+        //PreparedStatement psmt = null;
+        String sql="insert into vote_choose(choose_id,choose_info) values(?,?)";
+
+        int i = 0;
+        for (int j = 0; j < rowC; j++) {
+            i = jdbcTemplate.update(sql, c_id, s[j]);
+        }
+
+//        Connection conn=JDBCUtil.getConnection();
+//
+//        try {
+//            //编译sql语句
+//            for (int j = 0; j < rowC; j++) {
+//                psmt = conn.prepareStatement(sql);
+//                psmt.setInt(1, c_id);
+//                psmt.setString(2, s[j]);
+//                i = psmt.executeUpdate();
+//            }
+//        } catch (SQLException e) {
+//
+//            e.printStackTrace();
+//        }finally {
+//            //关闭数据库
+//            JDBCUtil.close(conn, stmt, psmt, rs);
+//        }
+        return i>0;
+
+    }
+
+
+    //增加投票到vote_info表
+    public int addinfo(String vote_title,String vote_type) {
+        //随机数
+        Random r = new Random();
+        int choose_id = r.nextInt(99999999);//随机数范围0-999998
+        //PreparedStatement psmt = null;
+        String sql = "insert into vote_info(vote_title,vote_type,choose_id) values(?,?,?)";
+
+
+        jdbcTemplate.update(sql,vote_title,vote_type,choose_id);
+        //链接数据库
+//        Connection conn=JDBCUtil.getConnection();
+//        int i = 0 ;
+//        //编译sql语句
+//        try {
+//            psmt = conn.prepareStatement(sql);
+//            psmt.setString(1, vote_title);
+//            psmt.setString(2, vote_type);
+//            psmt.setInt(3, choose_id);
+//            //i表示更新了多少行
+//            i = psmt.executeUpdate();
+//
+//        } catch (SQLException e) {
+//
+//            e.printStackTrace();
+//        }finally {
+//            JDBCUtil.close(conn, stmt, psmt, rs);
+//        }
+        return choose_id;
+    }
 
 
 
