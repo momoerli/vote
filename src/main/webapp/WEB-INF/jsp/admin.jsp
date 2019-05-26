@@ -184,11 +184,11 @@ a:hover {
 									}
 								}
 								if (isvote) {
-									yy += " <tr><td><img src='images/vote_icon.gif'/><a  style='color:grey' title='已投票' class='choice1' href='VoteServlet?flag=showVote&vote_id=";
+									yy += " <tr><td><img src='${ctx}/images/vote_icon.gif'/><a  style='color:grey' title='已投票' class='choice1' href='VoteServlet?flag=showVote&vote_id=";
 									yy += info["vote_id"] + "'";
 									yy += "> ";
 								} else {
-									yy += " <tr><td><img src='images/vote_icon.gif'/><a class='choice1' href='VoteServlet?flag=showVote&vote_id=";
+									yy += " <tr><td><img src='${ctx}/images/vote_icon.gif'/><a class='choice1' href='VoteServlet?flag=showVote&vote_id=";
 									yy += info["vote_id"] + "'";
 									yy += "> ";
 								}
@@ -200,15 +200,15 @@ a:hover {
 								yy += "已有 ";
 								yy += info["vote_sum"];
 								if (isvote) {
-									yy += " 个网友参与了投票<a class='choice2' title='已投票' style='float:right;color:grey'><img src='images/join_over.gif'/>&nbsp;已&nbsp;参&nbsp;与&nbsp;</a>";
+									yy += " 个网友参与了投票<a class='choice2' title='已投票' style='float:right;color:grey'><img src='${ctx}/images/join_over.gif'/>&nbsp;已&nbsp;参&nbsp;与&nbsp;</a>";
 								} else {
-									yy += " 个网友参与了投票<a  href='VoteServlet?flag=voteInterface&vote_id=";
+									yy += " 个网友参与了投票<a  href='${ctx}/vote/voteInterface?vote_id=";
 									yy += info["vote_id"] + "'";
-									yy += "class='choice2' style='float:right;'><img src='images/join.gif'/>&nbsp;我要参与</a>";
+									yy += "class='choice2' style='float:right;'><img src='${ctx}/images/join.gif'/>&nbsp;我要参与</a>";
 								}
 								yy += "<a  href='VoteServlet?flag=tomodify&vote_id=";
 								yy += info["vote_id"] + "'";
-								yy += "class='modify' style='float:right;display:none'><img src='images/edit.gif'/>维护</a></p></td></tr>";
+								yy += "class='modify' style='float:right;display:none'><img src='${ctx}/images/edit.gif'/>维护</a></p></td></tr>";
 								$("#list_table").html(yy);
 								/* alert(i); */
 								info = "";
@@ -233,6 +233,7 @@ a:hover {
 			$("#addinfo_div").css('display', 'inline');
 			$("#list_div").css('display', 'none');
 		}
+
 		function addRow() {
 			rowCount++;
 			var newRow = '<tr id="option'+rowCount+'"><td>选项'
@@ -271,11 +272,11 @@ a:hover {
 									}
 								}
 								if (isvote) {
-									yy += " <tr><td><img src='images/vote_icon.gif'/><a  style='color:grey' title='已投票' class='choice1' href='VoteServlet?flag=showVote&vote_id=";
+									yy += " <tr><td><img src='${ctx}/images/vote_icon.gif'/><a  style='color:grey' title='已投票' class='choice1' href='VoteServlet?flag=showVote&vote_id=";
 									yy += info["vote_id"] + "'";
 									yy += "> ";
 								} else {
-									yy += " <tr><td><img src='images/vote_icon.gif'/><a class='choice1' href='VoteServlet?flag=showVote&vote_id=";
+									yy += " <tr><td><img src='${ctx}/images/vote_icon.gif'/><a class='choice1' href='VoteServlet?flag=showVote&vote_id=";
 									yy += info["vote_id"] + "'";
 									yy += "> ";
 								}
@@ -286,15 +287,15 @@ a:hover {
 								yy += "已有 ";
 								yy += info["vote_sum"];
 								if (isvote) {
-									yy += " 个网友参与了投票<a class='choice2' title='已投票' style='float:right;color:grey'><img src='images/join_over.gif'/>&nbsp;已&nbsp;参&nbsp;与&nbsp;</a>";
+									yy += " 个网友参与了投票<a class='choice2' title='已投票' style='float:right;color:grey'><img src='${ctx}/images/join_over.gif'/>&nbsp;已&nbsp;参&nbsp;与&nbsp;</a>";
 								} else {
-									yy += " 个网友参与了投票<a  href='VoteServlet?flag=voteInterface&vote_id=";
+									yy += " 个网友参与了投票<a  href='${ctx}/vote/voteInterface?vote_id=";
 									yy += info["vote_id"] + "'";
-									yy += "class='choice2' style='float:right;'><img src='images/join.gif'/>&nbsp;我要参与</a>";
+									yy += "class='choice2' style='float:right;'><img src='${ctx}/images/join.gif'/>&nbsp;我要参与</a>";
 								}
 								yy += "<a  href='VoteServlet?flag=tomodify&vote_id=";
 								yy += info["vote_id"] + "'";
-								yy += "class='modify' style='float:right;display:none'><img src='images/edit.gif'/>维护</a></p></td></tr>";
+								yy += "class='modify' style='float:right;display:none'><img src='${ctx}/images/edit.gif'/>维护</a></p></td></tr>";
 								$("#search_list").html(yy);
 								info = "";
 							}

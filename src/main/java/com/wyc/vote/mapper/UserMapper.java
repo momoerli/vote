@@ -5,6 +5,8 @@ import com.wyc.vote.entity.User;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserMapper {
 
@@ -29,4 +31,9 @@ public interface UserMapper {
 
     @Select("select count(*) count from user_add_vote where user_id=#{id}")
     int searchuser_voteSum(Integer id);
+
+
+
+    @Select("select vote_id from user_add_vote where user_id=#{userid}")
+    List<Integer> searchvoteById(Integer userid,Integer votecount);
 }
