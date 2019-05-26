@@ -10,6 +10,7 @@ import com.wyc.vote.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,11 +50,24 @@ public class VoteController {
         return "admin";
     }
 
+    @RequestMapping("showVote")
+    public String showVote(HttpServletRequest req, HttpServletResponse resp, Model model) throws Exception{
+        //infodao = new InfoDao();
+        String vote_id = req.getParameter("vote_id");//用于标明哪个被投票
+        int count = infoService.searchinfoCountById(vote_id);//查询当前id的选项数量
+        List<Info> infolist= infoService.showVote(vote_id);
+        req.setAttribute("infolist", infolist);
+        req.setAttribute("infocount",count);
+        //req.getRequestDispatcher("showVote.jsp").forward(req, resp);
+        return "showVote";
+    }
+
+
     /**
      * 提交投票
      */
     @RequestMapping("doVote")
-    public void doVote(HttpServletRequest req, HttpServletResponse resp){
+    public String doVote(HttpServletRequest req, HttpServletResponse resp, Model model) throws IOException{
         boolean b = false;
         String vote_type = req.getParameter("vote_type");//投票类型
         String vote_id = req.getParameter("vote_id");//用于标明哪个被投票
@@ -68,23 +82,40 @@ public class VoteController {
             infoService.updateTicketSumById(vote_id);//计入投票总数
 
         }else if(vote_type.equals("1")){
-            int count = infodao.searchinfoCountById(vote_id);//查询当前id的选项数量count（choose_id）
+            int count = infoService.searchinfoCountById(vote_id);//查询当前id的选项数量count（choose_id）
             for (int i = 1; i <= count; i++) {
                 String inputname = i+"";//将i转换成字符串
                 String temp_id = req.getParameter(inputname);
                 if(temp_id!=null){
-                    b=infodao.singleVote(temp_id);//计入投票
-                    infodao.updateTicketSumById(vote_id);//计入投票总数
+                    b=infoService.singleVote(temp_id);//计入投票
+                    infoService.updateTicketSumById(vote_id);//计入投票总数
                 }
             }
         }
         if(b){
-            infodao.updatePersonsumById(vote_id);//更新投票人数
-            infodao.adduserVote(userid,vote_id);//标记用户投票
-            resp.getWriter().print("<script>var r=confirm('是否查看投票结果');if(r==true){window.location.href='VoteServlet?flag=showVote&vote_id="+vote_id+"';}else{window.location.href='admin.jsp';}</script>");
+            infoService.updatePersonsumById(vote_id);//更新投票人数
+            infoService.adduserVote(userid,vote_id);//标记用户投票
+//            resp.getWriter().print("<script>" +
+//                    "var r=confirm('是否查看投票结果');" +
+//                    "if(r==true) {" +
+//                        "window.location.href='VoteServlet?flag=showVote&vote_id="+vote_id+"';" +
+//                    "}else{" +
+//                        "window.location.href='admin.jsp';" +
+//                    "}</script>");
         }else{
             resp.getWriter().print("<script>alert('投票失败'); history.go(-1); </script>");
         }
+
+
+        String flag = "0";
+        if (b){
+            flag = "1";
+        }
+        model.addAttribute("flag",flag);
+        model.addAttribute("vote_id",vote_id);
+        return "voteResult";
+
+
     }
 
     @RequestMapping("voteInterface")

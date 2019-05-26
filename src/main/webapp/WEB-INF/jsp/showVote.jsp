@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ include file="common.jsp" %>
+<!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="js/jquery-1.x.js">
-	
-</script>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <style type="text/css">
 #choice2 {
 	color: #99CCFF;
@@ -42,15 +40,15 @@ a:hover {
 </head>
 <body>
 	<div style="margin-left: 280px;">
-		<img src="images/logo.gif" />
+		<img src="${ctx}/images/logo.gif" />
 	</div>
 
 	<div style="margin-left: 280px; width: 900px; height: 155px;">
 		<div style="width: 900px; height: 25px; background: #eeeeee">
 
 			<label>您好，管理员${user.user_name}</label> <label
-				style="margin-left: 40px"><img src="images/new.gif" /><a
-				href="admin.jsp">返回列表</a></label>
+				style="margin-left: 40px"><img src="${ctx}/images/new.gif" /><a
+				href="${ctx}/">返回列表</a></label>
 			<%-- 		<c:if test="${user.user_type==1}">
 		<label style="margin-left:40px"><img src="images/addnew.gif"/><a href="javascript:void(0)" style="color:grey" title="">添加新投票</a></label>
 		<label style="margin-left:40px"><img src="images/edit.gif"/><a href="#">维护</a></label>	
@@ -123,6 +121,6 @@ a:hover {
 	})
 
 	function Toadmin() {
-		window.location.href = "admin.jsp";
+		window.location.href = "${ctx}/";
 	}
 </script>
