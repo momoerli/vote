@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,9 @@ public class CustAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     CustUserDetailsService custUserDetailsService;
+
+    @Autowired
+    SessionRegistry sessionRegistry;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -45,6 +49,7 @@ public class CustAuthenticationProvider implements AuthenticationProvider {
 
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
 
+//        sessionRegistry.registerNewSession();
 
         return new UsernamePasswordAuthenticationToken(user, password, authorities);
     }

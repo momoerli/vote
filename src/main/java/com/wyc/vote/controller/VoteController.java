@@ -8,7 +8,10 @@ import com.wyc.vote.mapper.UserMapper;
 import com.wyc.vote.service.InfoService;
 import com.wyc.vote.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +37,16 @@ public class VoteController {
     @Autowired
     InfoService infoService;
 
+    @Autowired
+    SessionRegistry sessionRegistry;
+
+
+
+
     @RequestMapping("main")
-    public String home(){
+    public String home(Model model){
+        model.addAttribute("count",sessionRegistry.getAllPrincipals().size());
+
         return "admin";
     }
 
