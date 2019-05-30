@@ -101,6 +101,7 @@ public class VoteController {
         List<Info> infolist= infoService.showVote(vote_id);
         req.setAttribute("infolist", infolist);
         req.setAttribute("infocount",count);
+        model.addAttribute("count",sessionRegistry.getAllPrincipals().size());
         //req.getRequestDispatcher("showVote.jsp").forward(req, resp);
         return "showVote";
     }
@@ -162,7 +163,7 @@ public class VoteController {
     }
 
     @RequestMapping("voteInterface")
-    public String voteInterface(HttpServletRequest req, HttpServletResponse resp){
+    public String voteInterface(HttpServletRequest req, HttpServletResponse resp,Model model){
         //投票页面
         String vote_id = req.getParameter("vote_id");
         List<Info> infolist = infoService.searchinfoById(vote_id);
@@ -171,6 +172,7 @@ public class VoteController {
         req.setAttribute("infolist", infolist);
         req.setAttribute("infocount", infolist.size());
         //req.getRequestDispatcher("Vote.jsp").forward(req, resp);
+        model.addAttribute("count",sessionRegistry.getAllPrincipals().size());
         return "Vote";
     }
 
@@ -185,8 +187,9 @@ public class VoteController {
         }
 //        //InfoDao infoDao= new InfoDao();
 //        //int userid = user.getUser_id();//获取当前用户的ID vote_user id  赋值给user_add_ vote user_id
-        Integer userid = 0;
-//        //int votecount = infoDao.searchuser_voteSum(userid); //查询当前用户投了多少选项
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Integer userid = user.getUserId();
+        //        //int votecount = infoDao.searchuser_voteSum(userid); //查询当前用户投了多少选项
         int votecount = userMapper.searchuser_voteSum(userid);
 //
 //      int[] IsVote = infoDao.searchvoteById(userid,votecount);//查询当前用户已投票的选项

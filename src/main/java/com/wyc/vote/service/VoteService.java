@@ -19,7 +19,7 @@ public class VoteService {
     //主页列表显示
     public List<Info> showlist(int begin, int num){
         List<Info> infolist = new ArrayList<>();
-        String sql = "select  v.vote_id,v.vote_title, v.vote_sum, count(v1.choose_id) choose_sum, ANY_VALUE(user_name) " +
+        String sql = "select  v.vote_id,v.vote_title, v.vote_sum, count(v1.choose_id) choose_sum, ANY_VALUE(user_name) user_name " +
                 "from vote_info v,vote_choose v1,user_add_vote v2 left join vote_user  " +
                 "on id = user_id where v.choose_id = v1.choose_id and v2.vote_id = v.vote_id group by v.vote_id";
         sql += " limit " + begin + "," + num + " ";

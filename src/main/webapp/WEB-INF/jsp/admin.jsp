@@ -185,11 +185,11 @@ a:hover {
 									}
 								}
 								if (isvote) {
-									yy += " <tr><td><img src='${ctx}/images/vote_icon.gif'/><a  style='color:grey' title='已投票' class='choice1' href='VoteServlet?flag=showVote&vote_id=";
+									yy += " <tr><td><img src='${ctx}/images/vote_icon.gif'/><a  style='color:grey' title='已投票' class='choice1' href='${ctx}/vote/showVote?vote_id=";
 									yy += info["vote_id"] + "'";
 									yy += "> ";
 								} else {
-									yy += " <tr><td><img src='${ctx}/images/vote_icon.gif'/><a class='choice1' href='VoteServlet?flag=showVote&vote_id=";
+									yy += " <tr><td><img src='${ctx}/images/vote_icon.gif'/><a class='choice1' href='${ctx}/vote/showVote?vote_id=";
 									yy += info["vote_id"] + "'";
 									yy += "> ";
 								}
@@ -273,11 +273,11 @@ a:hover {
 									}
 								}
 								if (isvote) {
-									yy += " <tr><td><img src='${ctx}/images/vote_icon.gif'/><a  style='color:grey' title='已投票' class='choice1' href='VoteServlet?flag=showVote&vote_id=";
+									yy += " <tr><td><img src='${ctx}/images/vote_icon.gif'/><a  style='color:grey' title='已投票' class='choice1' href='${ctx}/vote/showVote?vote_id=";
 									yy += info["vote_id"] + "'";
 									yy += "> ";
 								} else {
-									yy += " <tr><td><img src='${ctx}/images/vote_icon.gif'/><a class='choice1' href='VoteServlet?flag=showVote&vote_id=";
+									yy += " <tr><td><img src='${ctx}/images/vote_icon.gif'/><a class='choice1' href='${ctx}/vote/showVote?vote_id=";
 									yy += info["vote_id"] + "'";
 									yy += "> ";
 								}
