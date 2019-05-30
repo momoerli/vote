@@ -70,9 +70,10 @@ a:hover {
 									style="width: 200px" /></td>
 							</tr>
 							<tr>
-								<td><lable>类型</lable> <input type="radio" name="vote_radio"
-									value="0" checked />单选&nbsp;&nbsp; <input type="radio"
-									name="vote_radio" value="1" />多选</td>
+								<td>
+									<lable>类型</lable>
+									<input type="radio" name="vote_radio" value="0" checked />单选&nbsp;&nbsp;
+									<input type="radio" name="vote_radio" value="1" />多选</td>
 							</tr>
 							<tr id="option1">
 								<td>选项1&nbsp;:&nbsp;<input type="text" name="option1"

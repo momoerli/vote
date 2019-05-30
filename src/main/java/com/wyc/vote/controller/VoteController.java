@@ -72,7 +72,7 @@ public class VoteController {
         String[] s = null;
         //获取投票主题和投票内容
         String vote_title = req.getParameter("vote_title");//投票主题
-        String vote_type = req.getParameter("vote_type");//投票类型 单选0，多选1
+        String vote_type = req.getParameter("vote_radio");//投票类型 单选0，多选1
         String rowCount = req.getParameter("rowCount");//选项数量
         int rowC = Integer.parseInt(rowCount);
         s = new String[rowC];
