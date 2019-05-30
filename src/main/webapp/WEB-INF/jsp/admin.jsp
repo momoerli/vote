@@ -251,7 +251,7 @@ a:hover {
 		}
 		function search() {
 			$("#list_div").css('display', 'none');
-			var url = "/Vote_Online/VoteServlet?flag=search";
+			var url = "${ctx}/vote/search";
 			var data = {
 				data : $("#search").val()
 			};

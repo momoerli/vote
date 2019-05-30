@@ -61,6 +61,25 @@ public class VoteController {
         return "admin";
     }
 
+
+    @RequestMapping("search")
+    public void search(HttpServletRequest req, HttpServletResponse resp, Model model) throws IOException {
+        //User user = (User) req.getSession().getAttribute("user");
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int userid=user.getUserId();
+        int votecount = infoService.searchuser_voteSum(userid);
+        int[] IsVote = infoService.searchvoteById(userid,votecount);//查询当前用户已投票的选项
+        String data = req.getParameter("data");
+        //infodao= new InfoDao();
+        List<Info> infolist = infoService.searchlist(data);
+        resp.setContentType("text/text");
+        resp.setCharacterEncoding("UTF-8");
+        JSONObject jo = new JSONObject();
+        jo.put("list", infolist);//转化为json格式
+        jo.put("IsVote", IsVote);//存值
+        resp.getWriter().write(jo.toJSONString());//传递给前台的ajax
+    }
+
     /**
      * add new vote.
      * @return

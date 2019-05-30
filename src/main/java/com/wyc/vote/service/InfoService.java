@@ -16,6 +16,115 @@ public class InfoService {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+
+
+    public List<Info> searchlist(String data) {
+        List<Info> infolist = new ArrayList<Info>();
+        // 定义sql语句
+        String sql = "select v.vote_id,v.vote_title,v.vote_sum,count(v1.choose_info) choose_count " +
+                "from vote_info v,vote_choose v1 " +
+                "where v.choose_id=v1.choose_id AND v.vote_title LIKE '%"
+                + data + "%' GROUP BY v.vote_id";
+
+        List<Map<String, Object>> mapList = jdbcTemplate.queryForList(sql);
+        for (int i = 0; i < mapList.size(); i++) {
+            Map<String, Object> map = mapList.get(i);
+            Info info = new Info();
+            info.setVote_id(Integer.valueOf(map.get("vote_id")+""));
+            info.setVote_title(map.get("vote_title")+"");
+
+            info.setVote_sum(Integer.valueOf(map.get("vote_sum")+""));
+            info.setChoose_sum(Integer.valueOf(map.get("choose_count")+""));
+            infolist.add(info);
+        }
+
+
+//        // 连接数据库
+//        Connection conn = JDBCUtil.getConnection();
+//        // 编译sql语句
+//        try {
+//            stmt = conn.prepareStatement(sql);
+//            // 执行sql语句
+//            rs = stmt.executeQuery(sql);
+//            while (rs.next()) {
+//                info = new Info();
+//                info.setVote_id(rs.getInt("vote_id"));
+//                info.setVote_title(rs.getString("vote_title"));
+//                info.setVote_sum(rs.getInt("vote_sum"));
+//                info.setChoose_sum(rs.getInt("choose_count"));
+//                infolist.add(info);
+//            }
+//            // 获取结果集
+//        } catch (SQLException e) {
+//
+//            e.printStackTrace();
+//        } finally {
+//            // 关闭数据库
+//            JDBCUtil.close(conn, stmt, null, rs);
+//        }
+        return infolist;
+
+    }
+
+    //查询是否已投票的信息
+    public int[] searchvoteById(int userid, int votecount) {
+        int[] a = new int[votecount + 1];
+        String sql="select vote_id from user_add_vote where user_id='"+userid+"'";
+
+
+        List<Map<String, Object>> mapList = jdbcTemplate.queryForList(sql);
+        for (int i = 0; i < mapList.size(); i++) {
+            Map<String, Object> map = mapList.get(i);
+            a[i] = Integer.valueOf(map.get("vote_id")+"");
+        }
+
+//        Connection conn = JDBCUtil.getConnection();
+//        int[] a = new int[votecount + 1];
+//        try {
+//            //编译sql语句
+//            stmt = conn.prepareStatement(sql);
+//            //执行sql语句
+//            rs = stmt.executeQuery(sql);
+//            int i = 0;
+//            while (rs.next()) {
+//                a[i] = rs.getInt("vote_id");
+//                i++;
+//            }
+//        } catch (SQLException e) {
+//
+//            e.printStackTrace();
+//        }
+        return a;
+    }
+
+    //查询当前用户投了多少选项
+    public int searchuser_voteSum(int userid) {
+        String sql="select count(*) count from user_add_vote where user_id='"+userid+"'";
+        int flag = 0;
+
+        flag = jdbcTemplate.queryForObject(sql,Integer.class);
+
+
+//        Connection conn = JDBCUtil.getConnection();
+//        int flag = 0;
+//
+//        try {
+//            //编译sql语句
+//            stmt = conn.prepareStatement(sql);
+//            //执行sql语句
+//            rs = stmt.executeQuery(sql);
+//            if (rs.next()) {
+//                flag = rs.getInt("count");
+//            }
+//
+//        } catch (SQLException e) {
+//
+//            e.printStackTrace();
+//        }
+
+        return flag;
+    }
+
     //用于记录发起投票的人  查询vote_info表中的vote_id
     public int searchVote_id(int c_id) {
         String sql = "select * from vote_info where choose_id='"+c_id+"'";
