@@ -86,6 +86,9 @@ public class VoteController {
         int vote_id = infoService.searchVote_id(c_id);//返回vote_id 用于记录发起投票的人
         int user_id = user.getUserId();//获得user_id 用于记录发起投票的人
         b = infoService.addUser_add_vote(vote_id,user_id);
+        if (!b) {
+            System.err.println("add info erro.");
+        }
 //        if(b) {
 //            resp.getWriter().println("<script>alert('添加成功');window.location.href='admin.jsp'</script>");
 //

@@ -45,7 +45,7 @@ public class InfoService {
     public boolean addUser_add_vote(int vote_id,int user_id ) {
         String sql="insert into user_add_vote(user_id,vote_id) VALUES (?,?) ";
 
-        int i = jdbcTemplate.update(sql, vote_id, user_id);
+        int i = jdbcTemplate.update(sql, user_id,vote_id);
 
 //        Connection conn=JDBCUtil.getConnection();
 //        int i = 0;
